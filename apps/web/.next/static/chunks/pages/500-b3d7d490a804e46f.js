@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[421],{990:(n,r,_)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/500",function(){return _(2295)}])},2295:(n,r,_)=>{"use strict";_.r(r),_.d(r,{default:()=>u});var e=_(6029);function u(){return(0,e.jsx)("div",{children:"Artsband internal error"})}}},n=>{n.O(0,[636,593,792],()=>n(n.s=990)),_N_E=n.O()}]);
