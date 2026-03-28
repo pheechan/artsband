@@ -113,6 +113,44 @@ Deploy this repo as one Vercel project from the repository root.
 - The root `vercel.json` uses Vercel Services to keep the web and Python runtimes inside one project.
 - If Vercel does not enable Services for your team yet, the fallback is going back to two separate projects.
 
+## Branch Workflow
+
+Recommended Git and Vercel workflow for this repo:
+
+- `main` = production branch
+- `dev` = shared preview and staging branch
+- `feature/*` = short-lived feature branches that merge into `dev`
+
+### Vercel Settings
+
+In your Vercel project:
+
+- Open `Settings` -> `Environments`
+- Set the Production Branch to `main`
+- Leave `dev` and all other branches as preview branches
+
+That gives you this behavior:
+
+- pushes to `main` create production deployments
+- pushes to `dev` create preview deployments
+- pushes to feature branches also create preview deployments
+
+### Suggested Daily Flow
+
+1. Branch from `dev`
+2. Open a PR back into `dev`
+3. Let Vercel create preview deployments for that branch
+4. Merge `dev` into `main` when the staging state is ready for production
+
+### First-Time Git Setup
+
+If `dev` only exists locally, push it to GitHub so Vercel can see it:
+
+```bash
+git checkout -b dev
+git push -u origin dev
+```
+
 ## Current Feature Surface
 
 ### Web
