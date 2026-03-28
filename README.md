@@ -82,32 +82,36 @@ Important behavior after the new migration:
 
 ## Vercel Deployment Guide
 
-Deploy this same GitHub repo as two separate Vercel projects.
+Deploy this repo as one Vercel project from the repository root.
 
-### 1. Web Project
+### 1. Import the Repo
 
-- Import the repo into Vercel.
-- Set the root directory to `apps/web`.
+- Import the GitHub repo into Vercel once.
+- Set the root directory to the repo root, not `apps/web` or `apps/api`.
+- If Vercel shows a framework choice, use `Services` when available.
+- If `Services` is not shown in the UI, choose `Other`. The root `vercel.json` still defines the deployment shape.
+- Keep the root `vercel.json` file. It maps:
+  - `apps/web` to `/`
+  - `apps/api` to `/backend`
+
+### 2. Project Settings
+
+- Use the repo root as the single project entrypoint.
 - Add the web environment variables from `apps/web/.env.example`.
-- Deploy.
-
-### 2. API Project
-
-- Import the same repo again as a second Vercel project.
-- Set the root directory to `apps/api`.
 - Add the API environment variables from `apps/api/.env.example`.
-- Deploy.
+- Set `NEXT_PUBLIC_SITE_URL` and `WEB_APP_URL` to the same deployed domain.
+- Set `NEXT_PUBLIC_API_BASE_URL` to the same deployed domain with `/backend` appended.
 
-### 3. Connect Them
+### 3. Runtime Layout
 
-- Copy the deployed API URL.
-- Set `NEXT_PUBLIC_API_BASE_URL` in the web project to that API URL.
-- Redeploy the web project.
+- The Next.js app serves the main site at `/`.
+- The FastAPI service is mounted at `/backend`.
+- The dashboard scheduler card uses `/backend/scheduler/capabilities`.
 
-This keeps each runtime isolated:
+### 4. Important Note
 
-- Next.js logs and env vars stay with the web project.
-- Python runtime and scheduler endpoints stay with the API project.
+- The root `vercel.json` uses Vercel Services to keep the web and Python runtimes inside one project.
+- If Vercel does not enable Services for your team yet, the fallback is going back to two separate projects.
 
 ## Current Feature Surface
 
